@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Tambah Event</h2>
     <a href="/events" class="btn btn-secondary mb-3">← Kembali</a>
-    <form action="/events" method="POST">
+    <form action="/events" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label>Kategori</label>
@@ -55,7 +55,32 @@
                 <input type="number" name="harga" class="form-control" value="0">
             </div>
         </div>
+        <div class="mb-3">
+            <label>Banner / Poster Event</label>
+            <input type="file" name="banner" class="form-control" accept="image/*" onchange="previewBanner(event)">
+            <div id="banner-preview" class="mt-2" style="display:none;">
+                <img id="preview-img" src="" alt="Preview" style="max-height:200px; border-radius:12px; object-fit:cover; width:100%;">
+            </div>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="is_featured" value="1" class="form-check-input" id="isFeatured">
+            <label class="form-check-label" for="isFeatured">Tampilkan sebagai Event Unggulan di Beranda</label>
+        </div>
         <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
 </div>
+
+<script>
+    function previewBanner(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('banner-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 @endsection

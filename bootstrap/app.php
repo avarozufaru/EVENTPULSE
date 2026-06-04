@@ -13,7 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'auth.login' => \App\Http\Middleware\CheckLogin::class,
-            'auth.admin' => \App\Http\Middleware\CheckAdmin::class,
+            'auth.admin' => \App\Http\Middleware\CheckAdminOnly::class,
+            'auth.penyelenggara' => \App\Http\Middleware\CheckPenyelenggara::class,
+            'auth.staff' => \App\Http\Middleware\CheckAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

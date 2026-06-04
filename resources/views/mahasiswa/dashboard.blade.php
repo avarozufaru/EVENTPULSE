@@ -25,6 +25,7 @@
                     <th>Lokasi</th>
                     <th>Kode Tiket</th>
                     <th>No Antrian</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,11 @@
                     <td>{{ $t->lokasi }}</td>
                     <td><span class="badge bg-primary">{{ $t->kode_tiket }}</span></td>
                     <td><span class="badge bg-success">#{{ $t->nomor_antrian }}</span></td>
+                    <td>
+                        <a href="/ticket/{{ $t->kode_tiket }}/download" class="btn btn-sm btn-primary-gradient">
+                            <i class="bi bi-download"></i> Unduh E-Tiket
+                        </a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

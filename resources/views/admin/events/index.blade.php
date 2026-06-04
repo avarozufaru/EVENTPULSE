@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Kelola Event</h2>
     <a href="/events/create" class="btn btn-primary mb-3">+ Tambah Event</a>
-    <a href="/admin/dashboard" class="btn btn-secondary mb-3 ms-2">← Dashboard</a>
+    <a href="{{ session('role') === 'admin' ? '/admin/dashboard' : '/penyelenggara/dashboard' }}" class="btn btn-secondary mb-3 ms-2">← Dashboard</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

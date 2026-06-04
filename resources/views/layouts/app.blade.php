@@ -142,6 +142,9 @@
                         @if(session('role') === 'admin')
                             <a class="nav-link" href="/admin/dashboard"><i class="bi bi-shield-check"></i> Admin</a>
                             <a class="nav-link" href="/events"><i class="bi bi-calendar-event"></i> Kelola Event</a>
+                        @elseif(session('role') === 'penyelenggara')
+                            <a class="nav-link" href="/penyelenggara/dashboard"><i class="bi bi-grid-fill"></i> Panel Penyelenggara</a>
+                            <a class="nav-link" href="/events"><i class="bi bi-calendar-event"></i> Kelola Event</a>
                         @else
                             <a class="nav-link" href="/dashboard"><i class="bi bi-person-circle"></i> Dashboard</a>
                         @endif

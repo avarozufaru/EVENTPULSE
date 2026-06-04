@@ -39,34 +39,72 @@ class AuthController extends Controller
 
     public function processLogin(Request $request)
     {
-    $user = DB::table('users')
-        ->where('email', $request->email)
-        ->first();
+        $user = DB::table('users')
+            ->where('email', $request->email)
+            ->first();
 
-    if (!$user) {
-        return back()->with('error', 'Email tidak ditemukan');
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan');
+        }
+
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Password salah');
+        }
+
+        // Jika role tab dipilih (mahasiswa/penyelenggara), validasi strict
+        $selectedTab = $request->input('role');
+        if ($selectedTab === 'mahasiswa' && $user->role !== 'mahasiswa') {
+            return back()->with('error', 'Akun ini bukan akun Mahasiswa.');
+        }
+        if ($selectedTab === 'penyelenggara' && $user->role !== 'penyelenggara') {
+            return back()->with('error', 'Akun ini bukan akun Penyelenggara.');
+        }
+
+        Session::put('id', $user->id);
+        Session::put('nama', $user->nama);
+        Session::put('role', $user->role);
+
+        // Redirect sesuai role
+        if ($user->role === 'penyelenggara') {
+            return redirect('/penyelenggara/dashboard');
+        }
+
+        return redirect('/dashboard');
     }
 
-    if (!Hash::check($request->password, $user->password)) {
-        return back()->with('error', 'Password salah');
+    public function adminLogin()
+    {
+        return view('admin.login');
     }
 
-    Session::put('id', $user->id);
-    Session::put('nama', $user->nama);
-    Session::put('role', $user->role);
+    public function processAdminLogin(Request $request)
+    {
+        $user = DB::table('users')
+            ->where('email', $request->email)
+            ->first();
 
-    // Redirect sesuai role
-    if ($user->role === 'admin') {
-        return redirect('/admin/dashboard');
-    }
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan');
+        }
 
-    return redirect('/dashboard');
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->with('error', 'Password salah');
+        }
+
+        if ($user->role !== 'admin') {
+            return back()->with('error', 'Akun ini bukan akun Admin.');
+        }
+
+        Session::put('id', $user->id);
+        Session::put('nama', $user->nama);
+        Session::put('role', $user->role);
+
+        return redirect('/admin/dashboard')->with('success', 'Selamat Datang Admin!');
     }
 
     public function logout()
     {
-    Session::flush();
-
-    return redirect('/login');
+        Session::flush();
+        return redirect('/login');
     }
 }

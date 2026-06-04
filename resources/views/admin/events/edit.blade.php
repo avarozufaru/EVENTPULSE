@@ -4,7 +4,7 @@
 <div class="container mt-4">
     <h2>Edit Event</h2>
     <a href="/events" class="btn btn-secondary mb-3">← Kembali</a>
-    <form action="/events/{{ $event->id }}" method="POST">
+    <form action="/events/{{ $event->id }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -58,7 +58,38 @@
                 <input type="number" name="harga" class="form-control" value="{{ $event->harga }}">
             </div>
         </div>
+        <div class="mb-3">
+            <label>Banner / Poster Event</label>
+            @if($event->banner)
+                <div class="mb-2">
+                    <p class="text-muted small">Banner saat ini:</p>
+                    <img src="{{ asset('storage/' . $event->banner) }}" alt="Banner" style="max-height:160px; border-radius:10px; object-fit:cover; width:100%;">
+                </div>
+            @endif
+            <input type="file" name="banner" class="form-control" accept="image/*" onchange="previewBanner(event)">
+            <div id="banner-preview" class="mt-2" style="display:none;">
+                <img id="preview-img" src="" alt="Preview" style="max-height:160px; border-radius:10px; object-fit:cover; width:100%;">
+            </div>
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" name="is_featured" value="1" class="form-check-input" id="isFeatured" {{ $event->is_featured ? 'checked' : '' }}>
+            <label class="form-check-label" for="isFeatured">Tampilkan sebagai Event Unggulan di Beranda</label>
+        </div>
         <button type="submit" class="btn btn-warning">Update</button>
     </form>
 </div>
+
+<script>
+    function previewBanner(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+                document.getElementById('preview-img').src = e.target.result;
+                document.getElementById('banner-preview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 @endsection
