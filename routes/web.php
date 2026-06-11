@@ -34,6 +34,7 @@ Route::middleware(['auth.login', 'auth.staff'])->group(function () {
 
 // Admin-only routes (harus login + admin)
 Route::middleware(['auth.login', 'auth.admin'])->group(function () {
+    Route::get('/admin/home', [HomeController::class, 'adminHome']);
     Route::get('/admin/dashboard', [DashboardController::class, 'adminIndex']);
     Route::get('/admin/peserta', [DashboardController::class, 'peserta']);
     Route::get('/admin', function () {
@@ -63,6 +64,7 @@ Route::middleware(['auth.login', 'auth.admin'])->group(function () {
 
 // Penyelenggara-only routes (harus login + penyelenggara)
 Route::middleware(['auth.login', 'auth.penyelenggara'])->group(function () {
+    Route::get('/penyelenggara/home', [HomeController::class, 'penyelenggaraHome']);
     Route::get('/penyelenggara/dashboard', [DashboardController::class, 'penyelenggaraIndex']);
     Route::get('/penyelenggara/peserta', [DashboardController::class, 'peserta']);
 });

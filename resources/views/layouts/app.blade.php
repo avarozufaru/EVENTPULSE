@@ -137,7 +137,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navMenu">
                 <div class="navbar-nav ms-auto align-items-center gap-1">
-                    <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
+                    @if(session('role') === 'admin')
+                        <a class="nav-link" href="/admin/home"><i class="bi bi-house"></i> Home</a>
+                    @elseif(session('role') === 'penyelenggara')
+                        <a class="nav-link" href="/penyelenggara/home"><i class="bi bi-house"></i> Home</a>
+                    @else
+                        <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
+                    @endif
                     @if(session('id'))
                         @if(session('role') === 'admin')
                             <a class="nav-link" href="/admin/dashboard"><i class="bi bi-shield-check"></i> Admin</a>

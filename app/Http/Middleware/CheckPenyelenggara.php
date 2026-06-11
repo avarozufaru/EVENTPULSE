@@ -12,7 +12,10 @@ class CheckPenyelenggara
     {
         $role = Session::get('role');
         if ($role !== 'penyelenggara') {
-            return redirect('/dashboard');
+            if ($role === 'admin') {
+                return redirect('/admin/dashboard')->with('error', 'Halaman ini khusus untuk Penyelenggara.');
+            }
+            return redirect('/dashboard')->with('error', 'Halaman ini khusus untuk Penyelenggara.');
         }
         return $next($request);
     }

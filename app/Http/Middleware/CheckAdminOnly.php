@@ -12,7 +12,11 @@ class CheckAdminOnly
     {
         $role = Session::get('role');
         if ($role !== 'admin') {
-            return redirect('/dashboard');
+            // Jika yang mengakses adalah penyelenggara, arahkan ke dashboard penyelenggara
+            if ($role === 'penyelenggara') {
+                return redirect('/penyelenggara/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman Admin.');
+            }
+            return redirect('/dashboard')->with('error', 'Anda tidak memiliki akses ke halaman Admin.');
         }
         return $next($request);
     }

@@ -262,6 +262,19 @@
 
 </div>
 
+@if($errors->any())
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'Pendaftaran Gagal!',
+        text: "{{ $errors->first() }}",
+        confirmButtonColor: '#6366f1',
+        background: '#1e1e2e',
+        color: '#e2e8f0'
+    });
+</script>
+@endif
+
 @if(session('error'))
 <script>
     Swal.fire({ icon: 'error', title: 'Gagal!', text: "{{ session('error') }}", confirmButtonColor: '#6366f1', background: '#1e1e2e', color: '#e2e8f0' });

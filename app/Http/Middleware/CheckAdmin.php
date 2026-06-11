@@ -11,7 +11,7 @@ class CheckAdmin
     {
         $role = Session::get('role');
         if ($role !== 'admin' && $role !== 'penyelenggara') {
-            return redirect('/dashboard');
+            return redirect('/dashboard')->with('error', 'Halaman ini khusus untuk Admin & Penyelenggara.');
         }
         return $next($request);
     }

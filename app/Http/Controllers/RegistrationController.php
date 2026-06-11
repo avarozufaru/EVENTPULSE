@@ -16,6 +16,11 @@ class RegistrationController extends Controller
             return redirect('/login');
         }
 
+        // Hanya mahasiswa yang boleh mendaftar event
+        if (Session::get('role') !== 'mahasiswa') {
+            return back()->with('error', 'Hanya mahasiswa yang dapat mendaftar event.');
+        }
+
         // Ambil data event
         $event = DB::table('events')->where('id', $id)->first();
         if (!$event) {

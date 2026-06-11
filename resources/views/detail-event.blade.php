@@ -2,7 +2,12 @@
 
 @section('content')
 <div class="container mt-4">
-    <a href="/" class="btn btn-secondary mb-3">← Kembali</a>
+    @php
+        $backUrl = '/';
+        if (session('role') === 'admin') $backUrl = '/admin/home';
+        elseif (session('role') === 'penyelenggara') $backUrl = '/penyelenggara/home';
+    @endphp
+    <a href="{{ $backUrl }}" class="btn btn-secondary mb-3">← Kembali</a>
 
     @php
         $judulLower = strtolower($event->judul);
@@ -58,18 +63,25 @@
             <p>{{ $event->deskripsi }}</p>
 
             <hr>
-            <form action="/event/{{ $event->id }}/daftar" method="POST">
-                @csrf
-                @if($remainingQuota > 0)
-                    <button type="submit" class="btn btn-success btn-lg w-100">
-                        🎟️ Daftar Event Sekarang
-                    </button>
-                @else
-                    <button type="button" class="btn btn-secondary btn-lg w-100" disabled>
-                        🚫 Kuota Penuh
-                    </button>
-                @endif
-            </form>
+            @if(session('role') === 'admin' || session('role') === 'penyelenggara')
+                <div class="alert text-center py-3" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); border-radius: 12px; color: #a78bfa;">
+                    <i class="bi bi-info-circle-fill"></i> 
+                    Anda login sebagai <strong>{{ session('role') === 'admin' ? 'Admin' : 'Penyelenggara' }}</strong>. Hanya mahasiswa yang dapat mendaftar event.
+                </div>
+            @else
+                <form action="/event/{{ $event->id }}/daftar" method="POST">
+                    @csrf
+                    @if($remainingQuota > 0)
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            🎟️ Daftar Event Sekarang
+                        </button>
+                    @else
+                        <button type="button" class="btn btn-secondary btn-lg w-100" disabled>
+                            🚫 Kuota Penuh
+                        </button>
+                    @endif
+                </form>
+            @endif
         </div>
     </div>
 </div>

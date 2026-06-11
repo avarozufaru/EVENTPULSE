@@ -300,13 +300,18 @@
     </div>
     
     <!-- Category Filter Pills -->
+    @php
+        $homeBase = '/';
+        if (session('role') === 'admin') $homeBase = '/admin/home';
+        elseif (session('role') === 'penyelenggara') $homeBase = '/penyelenggara/home';
+    @endphp
     <div class="mt-2">
         <div class="d-flex flex-wrap gap-2 justify-content-start">
-            <a href="/" class="btn btn-sm {{ request('category') == '' ? 'btn-primary-gradient' : 'btn-outline-light' }} px-4 py-2 rounded-pill">
+            <a href="{{ $homeBase }}" class="btn btn-sm {{ request('category') == '' ? 'btn-primary-gradient' : 'btn-outline-light' }} px-4 py-2 rounded-pill">
                 🌐 Semua Event
             </a>
             @foreach($categories as $cat)
-                <a href="/?category={{ $cat->id }}" class="btn btn-sm {{ request('category') == $cat->id ? 'btn-primary-gradient font-weight-bold' : 'btn-outline-light' }} px-4 py-2 rounded-pill">
+                <a href="{{ $homeBase }}?category={{ $cat->id }}" class="btn btn-sm {{ request('category') == $cat->id ? 'btn-primary-gradient font-weight-bold' : 'btn-outline-light' }} px-4 py-2 rounded-pill">
                     <i class="bi {{ $cat->icon }}"></i> {{ $cat->nama }}
                 </a>
             @endforeach

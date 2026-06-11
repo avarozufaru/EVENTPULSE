@@ -21,20 +21,33 @@ class AuthController extends Controller
 
     public function storeRegister(Request $request)
     {
-    DB::table('users')->insert([
-        'nama' => $request->nama,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-        'nim' => $request->nim,
-        'prodi' => $request->prodi,
-        'no_hp' => $request->no_hp,
-        'foto' => 'default.png',
-        'role' => 'mahasiswa',
-        'created_at' => now(),
-        'updated_at' => now()
-    ]);
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'nim' => 'required|unique:users,nim',
+            'prodi' => 'required',
+            'no_hp' => 'required',
+        ], [
+            'email.unique' => 'Email ini sudah terdaftar. Silakan gunakan email lain atau login.',
+            'nim.unique' => 'NIM ini sudah terdaftar.',
+            'password.min' => 'Password minimal 6 karakter.'
+        ]);
 
-    return redirect('/login');
+        DB::table('users')->insert([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nim' => $request->nim,
+            'prodi' => $request->prodi,
+            'no_hp' => $request->no_hp,
+            'foto' => 'default.png',
+            'role' => 'mahasiswa',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        return redirect('/login')->with('success', 'Akun berhasil dibuat! Silakan login.');
     }
 
     public function processLogin(Request $request)

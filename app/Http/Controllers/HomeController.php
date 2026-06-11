@@ -50,4 +50,42 @@ class HomeController extends Controller
 
         return view('detail-event', compact('event', 'remainingQuota'));
     }
+
+    public function adminHome(Request $request)
+    {
+        $categories = DB::table('categories')->get();
+        $query = DB::table('events')->where('status', 'published');
+
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
+
+        $events = $query->orderBy('tanggal', 'asc')->get();
+
+        $featuredEvents = DB::table('events')
+            ->where('is_featured', 1)
+            ->where('status', 'published')
+            ->get();
+
+        return view('home', compact('events', 'categories', 'featuredEvents'));
+    }
+
+    public function penyelenggaraHome(Request $request)
+    {
+        $categories = DB::table('categories')->get();
+        $query = DB::table('events')->where('status', 'published');
+
+        if ($request->has('category') && $request->category != '') {
+            $query->where('category_id', $request->category);
+        }
+
+        $events = $query->orderBy('tanggal', 'asc')->get();
+
+        $featuredEvents = DB::table('events')
+            ->where('is_featured', 1)
+            ->where('status', 'published')
+            ->get();
+
+        return view('home', compact('events', 'categories', 'featuredEvents'));
+    }
 }
