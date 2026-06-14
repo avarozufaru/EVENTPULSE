@@ -17,6 +17,34 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function userStore(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'role' => 'required|in:admin,penyelenggara,mahasiswa',
+        ], [
+            'email.unique' => 'Email ini sudah digunakan.',
+            'password.min' => 'Password minimal 6 karakter.'
+        ]);
+
+        DB::table('users')->insert([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'nim' => $request->nim,
+            'prodi' => $request->prodi,
+            'no_hp' => $request->no_hp,
+            'foto' => 'default.png',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        return redirect('/admin/users')->with('success', 'User berhasil ditambahkan!');
+    }
+
     public function userEdit($id)
     {
         $user = DB::table('users')->where('id', $id)->first();

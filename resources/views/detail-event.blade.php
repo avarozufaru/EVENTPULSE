@@ -69,18 +69,50 @@
                     Anda login sebagai <strong>{{ session('role') === 'admin' ? 'Admin' : 'Penyelenggara' }}</strong>. Hanya mahasiswa yang dapat mendaftar event.
                 </div>
             @else
-                <form action="/event/{{ $event->id }}/daftar" method="POST">
-                    @csrf
-                    @if($remainingQuota > 0)
-                        <button type="submit" class="btn btn-success btn-lg w-100">
-                            🎟️ Daftar Event Sekarang
-                        </button>
-                    @else
-                        <button type="button" class="btn btn-secondary btn-lg w-100" disabled>
-                            🚫 Kuota Penuh
-                        </button>
-                    @endif
-                </form>
+                <div class="card mt-4" style="border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; background: rgba(0,0,0,0.2);">
+                    <div class="card-header border-bottom-0 pt-4 pb-0 bg-transparent">
+                        <h5 class="mb-0 fw-bold">Form Pendaftaran Event</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/event/{{ $event->id }}/daftar" method="POST">
+                            @csrf
+                            @if(isset($user))
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Nama Lengkap</label>
+                                    <input type="text" name="nama" class="form-control bg-dark text-white border-secondary" value="{{ $user->nama }}" required>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">NIM</label>
+                                        <input type="text" name="nim" class="form-control bg-dark text-white border-secondary" value="{{ $user->nim }}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label text-muted">Program Studi</label>
+                                        <input type="text" name="prodi" class="form-control bg-dark text-white border-secondary" value="{{ $user->prodi }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted">Email</label>
+                                    <input type="email" name="email" class="form-control bg-dark text-white border-secondary" value="{{ $user->email }}" required>
+                                </div>
+                            @else
+                                <div class="alert alert-warning">
+                                    Silakan login terlebih dahulu untuk melihat data pendaftaran Anda.
+                                </div>
+                            @endif
+
+                            @if($remainingQuota > 0)
+                                <button type="submit" class="btn btn-success btn-lg w-100" style="border-radius: 8px;">
+                                    🎟️ Daftar Event Sekarang
+                                </button>
+                            @else
+                                <button type="button" class="btn btn-secondary btn-lg w-100" style="border-radius: 8px;" disabled>
+                                    🚫 Kuota Penuh
+                                </button>
+                            @endif
+                        </form>
+                    </div>
+                </div>
             @endif
         </div>
     </div>

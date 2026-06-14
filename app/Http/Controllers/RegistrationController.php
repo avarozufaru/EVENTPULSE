@@ -8,7 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class RegistrationController extends Controller
 {
-    public function store($id)
+    public function store(\Illuminate\Http\Request $request, $id)
     {
         $user_id = Session::get('id');
 
@@ -20,6 +20,26 @@ class RegistrationController extends Controller
         if (Session::get('role') !== 'mahasiswa') {
             return back()->with('error', 'Hanya mahasiswa yang dapat mendaftar event.');
         }
+
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:50',
+            'prodi' => 'required|string|max:100',
+            'email' => 'required|email|max:255|unique:users,email,' . $user_id,
+        ]);
+
+        // Update data user
+        DB::table('users')->where('id', $user_id)->update([
+            'nama' => $request->nama,
+            'nim' => $request->nim,
+            'prodi' => $request->prodi,
+            'email' => $request->email,
+            'updated_at' => now(),
+        ]);
+
+        // Perbarui session nama jika berubah
+        Session::put('nama', $request->nama);
 
         // Ambil data event
         $event = DB::table('events')->where('id', $id)->first();
@@ -58,7 +78,7 @@ class RegistrationController extends Controller
             'created_at' => now()
         ]);
 
-        return redirect('/dashboard')->with('success', 'Pendaftaran event berhasil!');
+        return redirect('/dashboard')->with('success', 'Pendaftaran event berhasil dan profil telah diperbarui!');
     }
 
     public function downloadTicket($kode_tiket)

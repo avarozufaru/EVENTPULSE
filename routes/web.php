@@ -43,6 +43,7 @@ Route::middleware(['auth.login', 'auth.admin'])->group(function () {
 
     // Kelola User
     Route::get('/admin/users', [AdminController::class, 'userIndex']);
+    Route::post('/admin/users', [AdminController::class, 'userStore']);
     Route::get('/admin/users/{id}/edit', [AdminController::class, 'userEdit']);
     Route::put('/admin/users/{id}', [AdminController::class, 'userUpdate']);
     Route::delete('/admin/users/{id}', [AdminController::class, 'userDestroy']);

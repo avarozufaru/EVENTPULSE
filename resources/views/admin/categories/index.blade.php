@@ -65,6 +65,7 @@
     </div>
 </div>
 
+@section('modals')
 <!-- Modal Tambah Kategori -->
 <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -115,6 +116,7 @@
         </div>
     </div>
 </div>
+@endsection
 
 <!-- DataTables -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
@@ -122,12 +124,24 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <style>
+    /* DataTables Pagination & Input Styles */
     .dataTables_wrapper .dataTables_filter input { background: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.12) !important; color: #e2e8f0 !important; border-radius: 10px !important; padding: 6px 14px !important; }
     .dataTables_wrapper .dataTables_length select { background: rgba(255,255,255,0.06) !important; border: 1px solid rgba(255,255,255,0.12) !important; color: #e2e8f0 !important; border-radius: 8px !important; }
     .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_length label, .dataTables_wrapper .dataTables_filter label { color: #94a3b8 !important; }
     .dataTables_wrapper .dataTables_paginate .paginate_button { color: #94a3b8 !important; background: transparent !important; border: 1px solid rgba(255,255,255,0.08) !important; border-radius: 8px !important; margin: 0 2px; }
     .dataTables_wrapper .dataTables_paginate .paginate_button.current { background: rgba(99,102,241,0.3) !important; color: #a78bfa !important; border-color: rgba(99,102,241,0.5) !important; }
     .dataTables_wrapper .dataTables_paginate .paginate_button:hover { background: rgba(99,102,241,0.2) !important; color: #e2e8f0 !important; }
+    
+    /* Fix Table Body Background to Transparent */
+    table.dataTable, table.dataTable tbody, table.dataTable tr, table.dataTable td, table.dataTable th {
+        background-color: transparent !important; 
+        color: #e2e8f0 !important; 
+    }
+    table.dataTable tbody tr:hover, table.dataTable tbody tr:hover td { 
+        background-color: rgba(255,255,255,0.04) !important; 
+    }
+    table.dataTable tbody td { border-bottom: 1px solid rgba(255,255,255,0.05) !important; }
+    table.dataTable thead th { border-bottom: 2px solid rgba(99,102,241,0.3) !important; }
 </style>
 <script>
     $(document).ready(function() {

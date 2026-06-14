@@ -70,45 +70,49 @@
 
         <!-- Event List Summary -->
         <div class="col-lg-4 mb-4">
-            <div class="glass-box h-100 d-flex flex-column justify-content-between">
+            <div class="glass-box h-100 d-flex flex-column justify-content-between p-4">
                 <div>
-                    <h5 class="text-white mb-4"><i class="bi bi-list-task text-primary"></i> Ringkasan Status Event</h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover text-white align-middle" style="font-size: 0.9rem;">
-                            <thead>
-                                <tr class="text-secondary" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                                    <th>Event</th>
-                                    <th>Pendaftar</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($eventStats->take(5) as $event)
-                                <tr>
-                                    <td class="text-truncate fw-semibold" style="max-width: 140px;" title="{{ $event->judul }}">{{ $event->judul }}</td>
-                                    <td>{{ $event->total_peserta }} / {{ $event->kuota }}</td>
-                                    <td>
-                                        @if($event->status === 'published')
-                                            <span class="badge" style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.3); padding: 4px 8px; border-radius: 8px;">Aktif</span>
-                                        @elseif($event->status === 'pending')
-                                            <span class="badge" style="background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); padding: 4px 8px; border-radius: 8px;">Pending</span>
-                                        @else
-                                            <span class="badge" style="background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 4px 8px; border-radius: 8px;">Ditolak</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="3" class="text-center py-4 text-muted">Belum ada event yang dibuat.</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                    <h5 class="text-white mb-4"><i class="bi bi-list-task text-primary me-2"></i> Ringkasan Status Event</h5>
+                    <div class="d-flex flex-column gap-3">
+                        @forelse($eventStats->take(5) as $event)
+                        <div class="p-3 rounded" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 text-white fw-semibold text-truncate" style="max-width: 60%;" title="{{ $event->judul }}">{{ $event->judul }}</h6>
+                                <div>
+                                    @if($event->status === 'published')
+                                        <span class="badge" style="background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); padding: 4px 8px; border-radius: 6px;">Aktif</span>
+                                    @elseif($event->status === 'pending')
+                                        <span class="badge" style="background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); padding: 4px 8px; border-radius: 6px;">Pending</span>
+                                    @else
+                                        <span class="badge" style="background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); padding: 4px 8px; border-radius: 6px;">Ditolak</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="text-muted small"><i class="bi bi-people-fill me-1"></i> Pendaftar</span>
+                                <span class="text-white fw-medium small">{{ $event->total_peserta }} / {{ $event->kuota }}</span>
+                            </div>
+                            <div class="progress mt-2" style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                                @php
+                                    $percent = ($event->kuota > 0) ? min(100, ($event->total_peserta / $event->kuota) * 100) : 0;
+                                    $colorClass = $percent >= 100 ? 'bg-danger' : ($percent >= 80 ? 'bg-warning' : 'bg-primary');
+                                @endphp
+                                <div class="progress-bar {{ $colorClass }}" role="progressbar" style="width: {{ $percent }}%; border-radius: 2px;"></div>
+                            </div>
+                        </div>
+                        @empty
+                        <div class="text-center py-5">
+                            <i class="bi bi-calendar-x text-muted fs-1 mb-3 d-block opacity-50"></i>
+                            <p class="text-muted">Belum ada event yang dibuat.</p>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
                 @if(count($eventStats) > 0)
-                <div class="text-end pt-3">
-                    <a href="/events" class="btn btn-sm btn-outline-light w-100" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.08);">Lihat Semua Event</a>
+                <div class="text-end pt-4 mt-auto">
+                    <a href="/events" class="btn btn-sm btn-outline-light w-100" style="border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); padding: 8px;">
+                        <i class="bi bi-arrow-right-circle me-1"></i> Lihat Semua Event
+                    </a>
                 </div>
                 @endif
             </div>

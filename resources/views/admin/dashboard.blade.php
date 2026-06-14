@@ -99,70 +99,62 @@
     <div class="row">
         <!-- Recent Registrations -->
         <div class="col-lg-7 mb-4">
-            <div class="glass-box h-100">
-                <h5 class="text-white mb-4"><i class="bi bi-clock-history text-primary"></i> Pendaftaran Tiket Terbaru</h5>
-                <div class="table-responsive">
-                    <table class="table table-hover text-white align-middle" style="font-size: 0.9rem;">
-                        <thead>
-                            <tr class="text-secondary" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                                <th>Nama Peserta</th>
-                                <th>Event</th>
-                                <th>Tanggal Daftar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($recentRegistrations as $reg)
-                            <tr>
-                                <td class="fw-semibold text-white">{{ $reg->nama }}</td>
-                                <td class="text-truncate" style="max-width: 220px;" title="{{ $reg->judul }}">{{ $reg->judul }}</td>
-                                <td><span style="color: #64748b;">{{ \Carbon\Carbon::parse($reg->created_at)->diffForHumans() }}</span></td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3" class="text-center py-4 text-muted">Belum ada pendaftaran tiket masuk.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <div class="glass-box h-100 p-4">
+                <h5 class="text-white mb-4"><i class="bi bi-clock-history text-primary me-2"></i> Pendaftaran Tiket Terbaru</h5>
+                <div class="d-flex flex-column gap-3">
+                    @forelse($recentRegistrations as $reg)
+                    <div class="d-flex justify-content-between align-items-center p-3 rounded" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: background 0.2s ease;">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle" style="width: 45px; height: 45px; background: rgba(99,102,241,0.15); color: #a78bfa; font-weight: bold; font-size: 1.1rem; border: 1px solid rgba(99,102,241,0.3);">
+                                {{ strtoupper(substr($reg->nama, 0, 1)) }}
+                            </div>
+                            <div>
+                                <h6 class="mb-1 text-white fw-semibold">{{ $reg->nama }}</h6>
+                                <p class="mb-0 text-muted" style="font-size: 0.85rem;"><i class="bi bi-ticket-detailed me-1"></i> {{ $reg->judul }}</p>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge" style="background: rgba(255,255,255,0.08); color: #cbd5e1; font-weight: normal; padding: 6px 10px; border-radius: 8px;">
+                                {{ \Carbon\Carbon::parse($reg->created_at)->diffForHumans() }}
+                            </span>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="text-center py-5">
+                        <i class="bi bi-inbox text-muted fs-1 mb-3 d-block opacity-50"></i>
+                        <p class="text-muted">Belum ada pendaftaran tiket terbaru.</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>
 
         <!-- Top Events -->
         <div class="col-lg-5 mb-4">
-            <div class="glass-box h-100">
-                <h5 class="text-white mb-4"><i class="bi bi-trophy-fill text-warning"></i> Event Paling Populer</h5>
-                <div class="table-responsive">
-                    <table class="table table-hover text-white align-middle" style="font-size: 0.9rem;">
-                        <thead>
-                            <tr class="text-secondary" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
-                                <th>Judul Event</th>
-                                <th>Peserta / Kuota</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($topEvents as $event)
-                            <tr>
-                                <td class="text-truncate fw-semibold text-white" style="max-width: 200px;" title="{{ $event->judul }}">{{ $event->judul }}</td>
-                                <td>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <span>{{ $event->total_peserta }} / {{ $event->kuota }}</span>
-                                        <div class="progress" style="height: 6px; width: 60px; background: rgba(255,255,255,0.05); border-radius: 3px;">
-                                            @php
-                                                $percent = ($event->kuota > 0) ? min(100, ($event->total_peserta / $event->kuota) * 100) : 0;
-                                            @endphp
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $percent }}%; border-radius: 3px;" aria-valuenow="{{ $percent }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="2" class="text-center py-4 text-muted">Belum ada data event.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+            <div class="glass-box h-100 p-4">
+                <h5 class="text-white mb-4"><i class="bi bi-trophy-fill text-warning me-2"></i> Event Paling Populer</h5>
+                <div class="d-flex flex-column gap-3">
+                    @forelse($topEvents as $event)
+                    <div class="p-3 rounded" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h6 class="mb-0 text-white fw-semibold text-truncate" style="max-width: 65%;" title="{{ $event->judul }}">{{ $event->judul }}</h6>
+                            <div class="text-warning fw-bold small" style="background: rgba(245,158,11,0.1); padding: 4px 8px; border-radius: 6px;">
+                                <i class="bi bi-people-fill me-1"></i> {{ $event->total_peserta }} / {{ $event->kuota }}
+                            </div>
+                        </div>
+                        <div class="progress mt-3" style="height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);">
+                            @php
+                                $percent = ($event->kuota > 0) ? min(100, ($event->total_peserta / $event->kuota) * 100) : 0;
+                            @endphp
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $percent }}%; border-radius: 3px;" aria-valuenow="{{ $percent }}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="text-center py-5">
+                        <i class="bi bi-calendar-x text-muted fs-1 mb-3 d-block opacity-50"></i>
+                        <p class="text-muted">Belum ada data event.</p>
+                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>

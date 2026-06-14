@@ -11,11 +11,10 @@ class DashboardController extends Controller
     {
         $user_id = Session::get('id');
 
-        // Active tickets (upcoming events)
+        // All tickets (active and past events)
         $tiket = DB::table('registrations')
             ->join('events', 'registrations.event_id', '=', 'events.id')
             ->where('registrations.user_id', $user_id)
-            ->where('events.tanggal', '>=', now()->toDateString())
             ->select(
                 'events.judul',
                 'events.tanggal',
@@ -23,26 +22,10 @@ class DashboardController extends Controller
                 'registrations.kode_tiket',
                 'registrations.nomor_antrian'
             )
-            ->orderBy('events.tanggal', 'asc')
-            ->get();
-
-        // Past events (riwayat)
-        $riwayat = DB::table('registrations')
-            ->join('events', 'registrations.event_id', '=', 'events.id')
-            ->where('registrations.user_id', $user_id)
-            ->where('events.tanggal', '<', now()->toDateString())
-            ->select(
-                'events.judul',
-                'events.tanggal',
-                'events.lokasi',
-                'registrations.kode_tiket',
-                'registrations.nomor_antrian',
-                'registrations.status'
-            )
             ->orderBy('events.tanggal', 'desc')
             ->get();
 
-        return view('mahasiswa.dashboard', compact('tiket', 'riwayat'));
+        return view('mahasiswa.dashboard', compact('tiket'));
     }
 
     public function adminIndex()

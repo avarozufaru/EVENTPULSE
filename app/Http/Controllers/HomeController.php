@@ -48,7 +48,13 @@ class HomeController extends Controller
 
         $remainingQuota = $event->kuota - $registeredCount;
 
-        return view('detail-event', compact('event', 'remainingQuota'));
+        // Get user if logged in
+        $user = null;
+        if (session()->has('id')) {
+            $user = DB::table('users')->where('id', session('id'))->first();
+        }
+
+        return view('detail-event', compact('event', 'remainingQuota', 'user'));
     }
 
     public function adminHome(Request $request)
