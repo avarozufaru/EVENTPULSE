@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <title>E-Tiket {{ $registration->kode_tiket }}</title>
@@ -14,17 +13,17 @@
         }
 
         .ticket-wrapper {
-            border: 2px solid #22c55e;
+            border: 2px solid #0ea5e9;
             border-radius: 12px;
             overflow: hidden;
             width: 100%;
             max-width: 650px;
             margin: 0 auto;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
         }
 
         .ticket-header {
-            background: linear-gradient(135deg, #16a34a, #22c55e);
+            background: linear-gradient(135deg, #0284c7, #0ea5e9);
             color: #ffffff;
             padding: 15px 20px;
             text-align: center;
@@ -105,7 +104,7 @@
 
         .ticket-pass {
             display: inline-block;
-            background-color: #22c55e;
+            background-color: #0ea5e9;
             color: #ffffff;
             padding: 8px 16px;
             border-radius: 20px;
@@ -118,7 +117,7 @@
             font-size: 22px;
             font-weight: 900;
             letter-spacing: 2px;
-            color: #16a34a;
+            color: #0284c7;
             margin-top: 5px;
         }
 
@@ -142,17 +141,16 @@
         .qris-image svg {
             width: 160px;
             height: 160px;
-        }
+        }   
+        
     </style>
 </head>
-
 <body>
 
     <div class="ticket-wrapper">
         <div class="ticket-header">
             <div class="logo">
-                <img src="{{ public_path('images/logo-ep.png') }}" alt="EventPulse Logo"
-                    style="height: 35px; width: auto; margin-bottom: 8px;">
+                <img src="{{ public_path('images/logo-ep.png') }}" alt="EventPulse Logo" style="height: 35px; width: auto; margin-bottom: 8px;">
             </div>
             <h1>E-Ticket</h1>
             <p>Tunjukkan tiket digital atau cetak ini saat memasuki lokasi acara</p>
@@ -191,10 +189,8 @@
                     <tr>
                         <td class="label">Waktu</td>
                         <td class="value">
-                            {{ $registration->jam_mulai }}
-                            @if ($registration->jam_selesai)
-                                - {{ $registration->jam_selesai }}
-                            @endif
+                            {{ $registration->jam_mulai }} 
+                            @if($registration->jam_selesai) - {{ $registration->jam_selesai }} @endif
                         </td>
                     </tr>
                     <tr>
@@ -208,15 +204,14 @@
         <div class="ticket-footer">
             <div class="ticket-pass">NO. ANTRIAN: #{{ $registration->nomor_antrian }}</div>
             <div>Kode Tiket Anda:</div>
-            @if (isset($qrCodeBase64))
-                <div class="qris-section">
-                    <div class="qris-label">SCAN UNTUK PEMBAYARAN (QRIS)</div>
-                    <div class="qris-image">
-                        <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" width="160" height="160"
-                            alt="QR Code" style="margin-top: 10px;">
-                    </div>
-                    <div class="qris-note">Silahkan melakukan pembayaran dengan memindai QR di atas</div>
+            @if(isset($qrCodeBase64))
+            <div class="qris-section">
+                <div class="qris-label">SCAN UNTUK PEMBAYARAN (QRIS)</div>
+                <div class="qris-image">
+                    <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" width="160" height="160" alt="QR Code" style="margin-top: 10px;">
                 </div>
+                <div class="qris-note">Silahkan melakukan pembayaran dengan memindai QR di atas</div>
+            </div>
             @endif
         </div>
     </div>
@@ -229,5 +224,4 @@
     </div>
 
 </body>
-
 </html>

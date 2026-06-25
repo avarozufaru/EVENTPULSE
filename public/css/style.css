@@ -2,192 +2,203 @@
    HERO SECTION
 ========================== */
 
-.hero-section {
-    background: linear-gradient(135deg, #15803d 0%, #22c55e 50%, #4ade80 100%);
+.hero-section{
+    background: linear-gradient(
+        135deg,
+        #0369a1 0%,
+        #0ea5e9 50%,
+        #38bdf8 100%
+    );
     min-height: 500px;
     display: flex;
     align-items: center;
 }
 
-.hero-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+.hero-badge{
+    display:inline-block;
+    background:rgba(255,255,255,.2);
+    color:#fff;
+    padding:8px 18px;
+    border-radius:50px;
+    font-size:.9rem;
+    font-weight:600;
+    backdrop-filter:blur(10px);
+    border: 1px solid rgba(255,255,255,.4);
 }
 
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.2;
+.hero-title{
+    font-size:3.5rem;
+    font-weight:800;
+    line-height:1.2;
 }
 
-.hero-highlight {
-    color: #facc15;
+.hero-highlight{
+    color:#facc15;
     text-shadow: 0 2px 10px rgba(250, 204, 21, 0.4);
 }
 
-.hero-subtitle {
-    max-width: 700px;
-    margin: auto;
-    color: rgba(255, 255, 255, 0.9);
+.hero-subtitle{
+    max-width:700px;
+    margin:auto;
+    color:rgba(255,255,255,.9);
 }
 
-.hero-stat {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 16px;
-    padding: 18px 28px;
-    min-width: 150px;
+.hero-stat{
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(12px);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius:16px;
+    padding:18px 28px;
+    min-width:150px;
 }
 
-.hero-stat-label {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.9);
+.hero-stat-label{
+    font-size:.9rem;
+    color:rgba(255,255,255,.9);
 }
 
 /* ==========================
    EVENT SECTION
 ========================== */
 
-body {
-    background: #f0f7ff;
+body{
+    background:#f0f7ff;
 }
 
-.event-card {
-    border: 1px solid rgba(34, 197, 94, 0.1) !important;
-    border-radius: 20px;
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #ffffff !important;
-    transition: 0.3s;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+.event-card{
+    border: 1px solid rgba(14, 165, 233, 0.1) !important;
+    border-radius:20px;
+    overflow:hidden;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    background:#ffffff !important;
+    transition:.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.03);
 }
 
-.event-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(34, 197, 94, 0.15) !important;
-    border-color: rgba(34, 197, 94, 0.3) !important;
+.event-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(14,165,233,.15) !important;
+    border-color: rgba(14,165,233,.3) !important;
 }
 
-.event-banner {
-    position: relative;
-    height: 220px;
-    overflow: hidden;
+.event-banner{
+    position:relative;
+    height:220px;
+    overflow:hidden;
 }
 
-.event-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: 0.4s;
+.event-image{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.4s;
 }
 
-.event-card:hover .event-image {
-    transform: scale(1.08);
+.event-card:hover .event-image{
+    transform:scale(1.08);
 }
 
-.price-badge-container {
-    position: absolute;
-    top: 12px;
-    right: 12px;
+.price-badge-container{
+    position:absolute;
+    top:12px;
+    right:12px;
 }
 
-.price-badge {
-    border-radius: 50px;
-    padding: 8px 14px;
-    font-size: 0.8rem;
-    font-weight: 600;
+.price-badge{
+    border-radius:50px;
+    padding:8px 14px;
+    font-size:.8rem;
+    font-weight:600;
 }
 
-.card-body {
-    padding: 22px;
-    flex: 1;
+.card-body{
+    padding:22px;
+    flex:1;
 }
 
-.event-date-badge {
-    display: inline-block;
-    background: rgba(34, 197, 94, 0.1);
-    color: #16a34a;
-    padding: 8px 14px;
-    border-radius: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
+.event-date-badge{
+    display:inline-block;
+    background:rgba(14, 165, 233, 0.1);
+    color:#0284c7;
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:.85rem;
+    font-weight:600;
 }
 
-.event-title {
-    margin-top: 15px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #0f172a;
-    min-height: 60px;
+.event-title{
+    margin-top:15px;
+    font-size:1.2rem;
+    font-weight:700;
+    color:#0f172a;
+    min-height:60px;
 }
 
-.event-info {
-    margin-top: 15px;
+.event-info{
+    margin-top:15px;
 }
 
-.event-info p {
-    color: #64748b;
-    margin-bottom: 10px;
-    font-size: 0.95rem;
+.event-info p{
+    color:#64748b;
+    margin-bottom:10px;
+    font-size:.95rem;
 }
 
-.card-footer {
-    padding: 22px;
-    background: transparent;
+.card-footer{
+    padding:22px;
+    background:transparent;
     border-top: 1px solid #e2e8f0;
-    margin-top: auto;
+    margin-top:auto;
 }
 
-.event-btn {
-    width: 100%;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    background: linear-gradient(135deg, #22c55e, #4ade80);
-    color: white !important;
-    border-radius: 12px;
-    padding: 13px;
-    font-weight: 600;
-    transition: 0.3s;
+.event-btn{
+    width:100%;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    background:linear-gradient(
+        135deg,
+        #0ea5e9,
+        #38bdf8
+    );
+    color:white !important;
+    border-radius:12px;
+    padding:13px;
+    font-weight:600;
+    transition:.3s;
 }
 
-.event-btn:hover {
-    color: white !important;
-    background: linear-gradient(135deg, #16a34a, #22c55e);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
+.event-btn:hover{
+    color:white !important;
+    background:linear-gradient(135deg, #0284c7, #0ea5e9);
+    transform:translateY(-2px);
+    box-shadow: 0 8px 20px rgba(14,165,233,.3);
 }
 
 /* ==========================
    EMPTY STATE
 ========================== */
 
-.empty-event-icon {
-    font-size: 4rem;
-    color: #cbd5e1;
+.empty-event-icon{
+    font-size:4rem;
+    color:#cbd5e1;
 }
 
 /* ==========================
    RESPONSIVE
 ========================== */
 
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.3rem;
+@media(max-width:768px){
+
+    .hero-title{
+        font-size:2.3rem;
     }
 
-    .hero-stat {
-        min-width: 120px;
-        padding: 15px 20px;
+    .hero-stat{
+        min-width:120px;
+        padding:15px 20px;
     }
+
 }
